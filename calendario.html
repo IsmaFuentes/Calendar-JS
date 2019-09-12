@@ -1,15 +1,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Calendar</title>
+        <!--Font awesome-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
         <div id="main">
-            <h4 id="title">Calendar</h4>
+            <h4 id="title">Calendar</h4><hr />
             <p id="month"></p>
             <div id="calendar"></div>
             <br />
-            <button id="next">next</button>
+            <button id="next"><i class="fas fa-arrow-right"></i></button>
         </div>
 
         <script>
@@ -50,42 +53,42 @@
                 initMonths(12);
             }
 
-            function createMonth(x) {
+            function createMonth(num) {
                 var days = 0;
 
-                switch (x) {
+                switch (num) {
                     case 0: case 2: case 4: case 6: case 7: case 9: case 11:
                         // days = 31
-                        days = new Date(year, (x + 1), 0).getDate();
-                        Months.push(new month(MonthNames[x], days));
+                        days = new Date(year, (num + 1), 0).getDate();
+                        Months.push(new month(MonthNames[num], days));
                         break;
                     case 1:
                         // days = 28/29
-                        days = new Date(year, (x + 1), 0).getDate(); 
-                        Months.push(new month(MonthNames[x], days));
+                        days = new Date(year, (num + 1), 0).getDate(); 
+                        Months.push(new month(MonthNames[num], days));
                         break;
                     case 3: case 5: case 8: case 10:
                         // days = 30
-                        days = new Date(year, (x + 1), 0).getDate();
-                        Months.push(new month(MonthNames[x], days));
+                        days = new Date(year, (num + 1), 0).getDate();
+                        Months.push(new month(MonthNames[num], days));
                         break;
                 }
             }
 
-            function createPage(x) {
-                var month = Months[x].name;
-                var days = Months[x].days;
+            function createPage(index) {
+                var month = Months[index].name;
+                var days = Months[index].days;
 
                 monthName.innerHTML = month;
                 calendar.innerHTML = createTable(days);
             }
 
             function nextPage() {
-                
-                if (pageIndex < MonthNames.length - 1) {
+                if (pageIndex < (MonthNames.length - 1)) {
                     pageIndex++;
                     actualMonth++;
                 } else {
+                    // when changing year...
                     pageIndex = 0;
                     year++;
                     actualMonth = 0;
@@ -99,6 +102,8 @@
 
             function createTable(days) {
                 var strTable = "<table id ='calendarTable'><tr>";
+                var aux = 0;
+                var dayNumber = 1;
 
                 // weekdays loop
                 for (var i = 0; i < WeekDays.length; i++) {
@@ -106,9 +111,6 @@
                 } strTable += "</tr><tr>";
 
                 // numbers loop
-                var aux = 0;
-                var dayNumber = 1;
-
                 for (var i = 0; i < (days + firstDay); i++) {
                     if (firstDay > i) {
                         strTable += "<td></td>";
@@ -117,6 +119,7 @@
                         dayNumber++;
                     } aux++;
                     if (aux == 7) {
+                        // we want table rows with a lenght of 7
                         strTable += "<tr/><tr>";
                         aux = 0;
                     }
@@ -127,14 +130,31 @@
         </script>
 
         <style>
-            #calendarTable {
-                text-align: center;
-                width: 340px;
-                height: 240px;
-                border: 1px solid black;
+            .fas{
+                color:white;
             }
-            .focused{
-                background: yellow;
+            #next{
+                width:50px;
+                height: 25px;
+                background: blue;
+                border: 1px solid blue;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+                #next:hover {
+                    background: lightblue;
+                    border: 1px solid lightblue;
+                }
+            #main {
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+            #calendarTable {
+                padding: 5px;
+                text-align: center;
+                width: 350px;
+                height: 250px;
+                border: 1px solid black;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             }
         </style>
     </body>
