@@ -1,0 +1,142 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Calendar</title>
+    </head>
+
+    <body>
+        <div id="main">
+            <h4 id="title">Calendar</h4>
+            <p id="month"></p>
+            <div id="calendar"></div>
+            <br />
+            <button id="next">next</button>
+        </div>
+
+        <script>
+            window.onload = function () {
+                initMonths(12);
+                createPage(0);
+                document.getElementById("title").innerHTML += " " + year;
+                document.getElementById("next").onclick = function () { nextPage() };
+            }
+
+            var monthName = document.getElementById("month");
+            var calendar = document.getElementById("calendar");
+            var WeekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+            var MonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+            var Months = [];
+            var pageIndex = 0;
+
+            var date = new Date();
+            var actualMonth = 0;
+            var year = date.getFullYear();
+            var firstDay = new Date(year, actualMonth, 0).getDay();
+
+
+            function month(name, days) {
+                this.name = name;
+                this.days = days;
+            }
+
+            function initMonths(num) {
+                for (var i = 0; i < num; i++) {
+                    createMonth(i);
+                }
+            }
+
+            function reloadMonths() {
+                Months = [];
+                initMonths(12);
+            }
+
+            function createMonth(x) {
+                var days = 0;
+
+                switch (x) {
+                    case 0: case 2: case 4: case 6: case 7: case 9: case 11:
+                        // days = 31
+                        days = new Date(year, (x + 1), 0).getDate();
+                        Months.push(new month(MonthNames[x], days));
+                        break;
+                    case 1:
+                        // days = 28/29
+                        days = new Date(year, (x + 1), 0).getDate(); 
+                        Months.push(new month(MonthNames[x], days));
+                        break;
+                    case 3: case 5: case 8: case 10:
+                        // days = 30
+                        days = new Date(year, (x + 1), 0).getDate();
+                        Months.push(new month(MonthNames[x], days));
+                        break;
+                }
+            }
+
+            function createPage(x) {
+                var month = Months[x].name;
+                var days = Months[x].days;
+
+                monthName.innerHTML = month;
+                calendar.innerHTML = createTable(days);
+            }
+
+            function nextPage() {
+                
+                if (pageIndex < MonthNames.length - 1) {
+                    pageIndex++;
+                    actualMonth++;
+                } else {
+                    pageIndex = 0;
+                    year++;
+                    actualMonth = 0;
+                    reloadMonths();
+                    document.getElementById("title").innerHTML = "Calendar " + year;
+                };
+
+                firstDay = new Date(year, actualMonth, 0).getDay();
+                createPage(pageIndex);
+            }
+
+            function createTable(days) {
+                var strTable = "<table id ='calendarTable'><tr>";
+
+                // weekdays loop
+                for (var i = 0; i < WeekDays.length; i++) {
+                    strTable += "<td>" + WeekDays[i] + "</td>";
+                } strTable += "</tr><tr>";
+
+                // numbers loop
+                var aux = 0;
+                var dayNumber = 1;
+
+                for (var i = 0; i < (days + firstDay); i++) {
+                    if (firstDay > i) {
+                        strTable += "<td></td>";
+                    } else {
+                        strTable += "<td>" + dayNumber + "</td>";
+                        dayNumber++;
+                    } aux++;
+                    if (aux == 7) {
+                        strTable += "<tr/><tr>";
+                        aux = 0;
+                    }
+                } strTable += "</tr></table>";
+
+                return strTable;
+            }
+        </script>
+
+        <style>
+            #calendarTable {
+                text-align: center;
+                width: 340px;
+                height: 240px;
+                border: 1px solid black;
+            }
+            .focused{
+                background: yellow;
+            }
+        </style>
+    </body>
+</html>
+
