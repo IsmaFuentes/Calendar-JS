@@ -55,7 +55,7 @@
 
             function createMonth(num) {
                 
-                days = new Date(year, (num + 1), 0).getDate();
+                var days = new Date(year, (num + 1), 0).getDate();
                 Months.push(new month(MonthNames[num], days));
                 //var days = 0;
                 //switch (num) {
