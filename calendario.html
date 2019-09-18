@@ -20,8 +20,8 @@
                 initMonths(12);
                 createPage(0);
                 document.getElementById("title").innerHTML += " " + year;
-                document.getElementById("next").onclick = function () { nextPage() };
-            }
+                document.getElementById("next").onclick = function () { nextPage(); };
+            };
 
             var monthName = document.getElementById("month");
             var calendar = document.getElementById("calendar");
@@ -54,27 +54,8 @@
             }
 
             function createMonth(num) {
-                
                 var days = new Date(year, (num + 1), 0).getDate();
                 Months.push(new month(MonthNames[num], days));
-                //var days = 0;
-                //switch (num) {
-                //    case 0: case 2: case 4: case 6: case 7: case 9: case 11:
-                //        // days = 31
-                //        days = 31;
-                //        Months.push(new month(MonthNames[num], days));
-                //        break;
-                //    case 1:
-                //        // days = 28/29
-                //        days = 28; 
-                //        Months.push(new month(MonthNames[num], days));
-                //        break;
-                //    case 3: case 5: case 8: case 10:
-                //        // days = 30
-                //        days = 30;
-                //        Months.push(new month(MonthNames[num], days));
-                //        break;
-                //}
             }
 
             function createPage(index) {
@@ -108,19 +89,19 @@
                 var dayNumber = 1;
 
                 // weekdays loop
-                for (var i = 0; i < WeekDays.length; i++) {
+                for (let i = 0; i < WeekDays.length; i++) {
                     strTable += "<td>" + WeekDays[i] + "</td>";
                 } strTable += "</tr><tr>";
 
                 // numbers loop
-                for (var i = 0; i < (days + firstDay); i++) {
+                for (let i = 0; i < (days + firstDay); i++) {
                     if (firstDay > i) {
                         strTable += "<td></td>";
                     } else {
                         strTable += "<td>" + dayNumber + "</td>";
                         dayNumber++;
                     } aux++;
-                    if (aux == 7) {
+                    if (aux === 7) {
                         // we want table rows with a lenght of 7
                         strTable += "<tr/><tr>";
                         aux = 0;
@@ -143,10 +124,10 @@
                 cursor: pointer;
                 border-radius: 5px;
             }
-                #next:hover {
-                    background: lightblue;
-                    border: 1px solid lightblue;
-                }
+            #next:hover {
+                background: lightblue;
+                border: 1px solid lightblue;
+            }
             #main {
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
                 width: 50%;
