@@ -1,4 +1,3 @@
 # Calendar-JS
-Calendario hecho en Javascript
-
+Javascript Calendar
 https://raw.githack.com/IsmaFuentes/Calendar-JS/master/calendario.html
